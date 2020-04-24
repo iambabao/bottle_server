@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>{{web_title}}</title>
+    <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <hr/>
+    <div class="row">
+        <h1>{{web_name}}</h1>
+        <h3><small>{{web_desc}}</small></h3>
+    </div>
+</div>
+<div class="container">
+    <hr/>
+    <div class="row">
+        <form class="form" role="form" method="get" action=".">
+            <div class="form-group">
+                <input type="text" class="form-control" name="inputs" placeholder="params" value="{{inputs if defined('inputs') else ''}}"/>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit"/>
+            % if defined('exams') and len(exams) > 10:
+                <button type="button" class="btn" data-toggle="collapse" data-target="#examples">Show Examples</button>
+            % end
+        </form>
+        % if defined('exams'):
+            <div class="row collapse in" id="examples">
+                % if len(exams) <= 10:
+                    <ul>
+                        % for item, uitem in exams:
+                            <li><a href="./?inputs={{uitem}}">{{item}}</a></li>
+                        % end
+                    </ul>
+                % end
+                % if len(exams) > 10:
+                    % for item, uitem in exams:
+                        <span><a href="./?inputs={{uitem}}">{{item}}</a></span>
+                    % end
+                % end
+            </div>
+        % end
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        % if defined('inputs'):
+            <hr/>
+            Input:
+            <h3>{{inputs}}</h3>
+        % end
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        % if defined('history') and len(history) > 1:
+            <hr/>
+            History:
+            <ul>
+                % for item in history:
+                    <li>{{item}}</li>
+                % end
+            </ul>
+        % end
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        % if defined('outputs'):
+            <hr/>
+            Output:
+            <ul>
+                % for content, score in outputs:
+                    <li>
+                        command: {{content}}<br/>
+                        score: {{score}}
+                    </li>
+                % end
+            </ul>
+        % end
+    </div>
+</div>
+</body>
+</html>
